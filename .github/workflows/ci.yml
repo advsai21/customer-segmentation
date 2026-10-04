@@ -1,0 +1,53 @@
+name: Customer Segmentation CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compile source
+        run: python -m compileall -q src app.py
+
+      - name: Run tests
+        run: pytest -v
+
+      - name: Training smoke test
+        run: |
+          python -m src.train \
+            --data data/sample_customers.csv \
+            --features "Annual Income (k$)" "Spending Score (1-100)" \
+            --k 3 \
+            --model-path /tmp/customer_kmeans.joblib \
+            --report-path /tmp/evaluation.json
+
+      - name: Upload evaluation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evaluation-report
+          path: /tmp/evaluation.json
+          if-no-files-found: ignore

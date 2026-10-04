@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: customer-segmentation
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
