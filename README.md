@@ -113,3 +113,4 @@ Open `http://localhost:8501`.
 - **Too few rows:** K-Means needs at least K samples; use more rows or reduce K.
 - **Model not found:** train once with the command above; the dashboard can also train a model from its selected uploaded data.
 - **Different clusters on each run:** the project sets a fixed random seed by default. Change `--random-state` intentionally to explore sensitivity.
+<!-- CI/CD automatic deployment test -->
