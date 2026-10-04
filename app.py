@@ -10,7 +10,7 @@ from src.clustering import fit_clustering
 from src.evaluation import evaluate_clustering, compare_k_values
 
 st.set_page_config(page_title="Customer Segmentation", page_icon="🛍️", layout="wide")
-st.title("🛍️ Customer Segmentation")
+st.title("Customer Segmentation — Live")
 st.caption("Explore customer groups using K-Means clustering.")
 
 @st.cache_data
