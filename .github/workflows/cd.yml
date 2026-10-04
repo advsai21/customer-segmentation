@@ -1,3 +1,4 @@
+
 name: Customer Segmentation CD
 
 on:
@@ -12,8 +13,7 @@ permissions:
 
 jobs:
   deploy:
-    # Enable by removing `&& false` after configuring the Render secret.
-    if: ${{ (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success') && false }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Render deployment
